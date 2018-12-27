@@ -1,0 +1,976 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{Tratamiento de Datos \\ \huge Proyecto Final}
+    \author{Pablo Izquierdo Conde\\ Jorge Pose Eiroa}
+    \date{\today}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    \section{Obtención de
+categorías}\label{obtenciuxf3n-de-categoruxedas}
+
+    La primera parte del Proyecto consiste en obtener las páginas con las
+que vamos a trabajar. Para ello seleccionamos dos categorías de la
+Wikipedia, que en nuestro caso, y por ser las categorías iniciales muy
+disjuntas, el profesor nos ha permitido escoger dos subcategorías de la
+categoría \textit{Sports}.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k+kn}{import} \PY{n+nn}{wikipediaapi} \PY{k}{as} \PY{n+nn}{wk}
+        \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        \PY{k+kn}{import} \PY{n+nn}{copy}
+        
+        \PY{n}{wiki} \PY{o}{=} \PY{n}{wk}\PY{o}{.}\PY{n}{Wikipedia}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{en}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} Cogemos las categorías seleccionadas}
+        \PY{n}{cat0} \PY{o}{=} \PY{n}{wiki}\PY{o}{.}\PY{n}{page}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Category:Esports}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{cat1} \PY{o}{=} \PY{n}{wiki}\PY{o}{.}\PY{n}{page}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Category:Combat\PYZus{}sports}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    Una vez seleccionadas las categorías es necesario obtener las páginas
+que cuelgan de ellas, así como algunas de las páginas que cuelgan de las
+subcategorías de las categorías elegidas. Esto es lo que hace la
+siguiente función, a la que le hemos puesto una profundidad de 3
+niveles, que es más que suficiente para obtener el número de páginas
+necesarias.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{c+c1}{\PYZsh{} Función que busca recursivamente en las categorías y nos devuelve una lista con las páginas}
+        \PY{k}{def} \PY{n+nf}{print\PYZus{}categorymembers}\PY{p}{(}\PY{n}{categorymembers}\PY{p}{,} \PY{n}{level}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{max\PYZus{}level}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{,} \PY{n}{pages} \PY{o}{=} \PY{p}{[}\PY{p}{]}\PY{p}{)}\PY{p}{:}
+            \PY{k}{for} \PY{n}{c} \PY{o+ow}{in} \PY{n}{categorymembers}\PY{o}{.}\PY{n}{values}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                \PY{k}{if} \PY{n}{c}\PY{o}{.}\PY{n}{ns} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{:} \PY{c+c1}{\PYZsh{} Sacamos las páginas (ns=0)}
+                    \PY{n}{pages}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{c}\PY{p}{)}
+                \PY{k}{if} \PY{n}{c}\PY{o}{.}\PY{n}{ns} \PY{o}{==} \PY{n}{wk}\PY{o}{.}\PY{n}{Namespace}\PY{o}{.}\PY{n}{CATEGORY} \PY{o+ow}{and} \PY{n}{level} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{n}{max\PYZus{}level}\PY{p}{:}
+                    \PY{n}{print\PYZus{}categorymembers}\PY{p}{(}\PY{n}{c}\PY{o}{.}\PY{n}{categorymembers}\PY{p}{,} \PY{n}{level} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{pages}\PY{p}{)}
+        \PY{n}{p0} \PY{o}{=} \PY{p}{[}\PY{p}{]} \PY{c+c1}{\PYZsh{}len=1227}
+        \PY{n}{p1} \PY{o}{=} \PY{p}{[}\PY{p}{]}\PY{c+c1}{\PYZsh{}len=4288}
+        \PY{n}{print\PYZus{}categorymembers}\PY{p}{(}\PY{n}{cat0}\PY{o}{.}\PY{n}{categorymembers}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{p0}\PY{p}{)}
+        \PY{n}{print\PYZus{}categorymembers}\PY{p}{(}\PY{n}{cat1}\PY{o}{.}\PY{n}{categorymembers}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{p1}\PY{p}{)}
+\end{Verbatim}
+
+
+    Una vez obtenidas las páginas, procedemos a obtener el texto que
+usaremos como corpus para el resto del proyecto, tomando 500 páginas
+aleatorias de cada categoría. Este proceso va a llevar un rato, ya que
+es necesario recorrer todas las páginas y descargar el texto.\\
+
+Para poder elegir las páginas de forma aleatoria, se va a realizar una
+permutación aleatoria sobre los índices de las páginas, para
+posteriormente coger las 500 primeras como datos de entrenamiento y las
+200 siguientes como datos de test.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{n}{indices0} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{permutation}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{p0}\PY{p}{)}\PY{p}{)}
+        \PY{n}{indices1} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{permutation}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{p1}\PY{p}{)}\PY{p}{)}
+        
+        \PY{n}{indices0\PYZus{}train} \PY{o}{=} \PY{n}{indices0}\PY{p}{[}\PY{p}{:}\PY{l+m+mi}{500}\PY{p}{]}
+        \PY{n}{indices1\PYZus{}train} \PY{o}{=} \PY{n}{indices1}\PY{p}{[}\PY{p}{:}\PY{l+m+mi}{500}\PY{p}{]}
+        
+        \PY{c+c1}{\PYZsh{} Sacamos el texto de las listas de páginas}
+        \PY{n}{corpus0} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        \PY{n}{corpus1} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        
+        \PY{c+c1}{\PYZsh{} Corpus 0 train}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Corpus 0}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{k}{for} \PY{n}{n}\PY{p}{,}\PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{indices0\PYZus{}train}\PY{p}{)}\PY{p}{:}
+            \PY{k}{if} \PY{o+ow}{not} \PY{n}{n}\PY{o}{\PYZpc{}}\PY{k}{100}:
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}r}\PY{l+s+s1}{Page}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{n}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{out of}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{indices0\PYZus{}train}\PY{p}{)}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{flush}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+            \PY{n}{corpus0}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{p0}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{text}\PY{p}{)}
+             
+        \PY{c+c1}{\PYZsh{} Corpus 1 train    }
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Corpus 1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{k}{for} \PY{n}{n}\PY{p}{,}\PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{indices1\PYZus{}train}\PY{p}{)}\PY{p}{:}
+            \PY{k}{if} \PY{o+ow}{not} \PY{n}{n}\PY{o}{\PYZpc{}}\PY{k}{100}:
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}r}\PY{l+s+s1}{Page}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{n}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{out of}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{indices1\PYZus{}train}\PY{p}{)}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{flush}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+            \PY{n}{corpus1}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{p1}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{text}\PY{p}{)}
+        
+        \PY{n}{corpustotal}\PY{o}{=}\PY{n}{copy}\PY{o}{.}\PY{n}{deepcopy}\PY{p}{(}\PY{n}{corpus0}\PY{p}{)} \PY{c+c1}{\PYZsh{} Copiamos el corpus0 en el corpustotal}
+        \PY{n}{corpustotal}\PY{o}{.}\PY{n}{extend}\PY{p}{(}\PY{n}{corpus1}\PY{p}{)} \PY{c+c1}{\PYZsh{} Lo mismo con el corpus1}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Corpus 0
+Page 400 out of 500
+Corpus 1
+Page 400 out of 500
+    \end{Verbatim}
+
+    Al usar el método \textit{text} sobre las distintas páginas obtenemos
+directamente el contenido del artículo en texto plano, y además se
+elimina la sección de \textit{Categories} y otras que pudieran
+interferir con los resultados, como \textit{References}.\\
+
+Puede comprobarse que esto es así imprimiendo cualquier página de las
+guardadas en \textit{corpustotal}.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{n+nb}{print}\PY{p}{(}\PY{n}{corpustotal}\PY{p}{[}\PY{l+m+mi}{921}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Ironheart (1992) is a martial arts film starring Bolo Yeung, created as a showcase vehicle for Britton K. Lee. It is considered a cult classic by many Bolo Yeung fans.
+
+Plot
+Ironheart opens at a Portland nightclub (Upfront FX), where Milverstead, who is considered the most powerful and ruthless man in town, and his group of thugs are looking at the female clientele with an approving eye.  Milverstead is shipping illegal arms out of the Portland docks, and to sweeten the deals with his trading partners, he kidnaps local lonely dancers, strings them out on heroin, and sends them along in the deal.  He notices Cindy Kane (Meagan Hughes) dancing furiously to U-Krew's hit "If You Were Mine" and decides to kidnap her.  To lure her into his trap, he instructs his young lieutenant Richard (Michael Lowry) to flirt with her and get her to go with him.  Cindy is ostensibly with her loser boyfriend Stevo (Rob Buckmaster) at the club, but wants to get him jealous and so leaves with Richard.  Milverstead and his gang leave shortly thereafter.
+However, they are being tailed from the club by a new policeman on the Portland force from LA named Douglas (David Mountain),  Douglas has been tipped to Milverstead's shady dealings and follows everyone to the docks, where most of the gang is now dragging Cindy onto a boat, locking her in a cage and shooting her full of heroin.   At this point, Milverstead's second in command, Ice (Bolo Yeung) takes some of the gang and lays a trap for Douglas.  They beat Douglas senseless, at which point Ice shoots Douglas in cold blood on a pile of old tires, and also blows up his car with gunfire.
+Back in LA, Douglas's old partner John Keem (Britton K. Lee) is made aware of his partner's untimely death and strangely ordered to Portland to assist the local police in the investigation.  While driving to Portland in a red convertible Porsche, he stops for a sandwich when he notices some men on the beach smoking marijuana and, subsequently, attempting to rape a female jogger.  He goes to investigate when he is charged by a drugged out rapist named Spike, and promptly beats him and the rest of the potential rapists up, saving the jogger's life.  When he goes to check on the woman, she has fled in terror from the bizarre encounter.
+Upon reaching Portland, he immediately goes to meet with Captain Kronious (Joe Ivy), who offers assistance and mentions that a woman also disappeared the same night Douglas was killed, a Cindy Kane.  John goes to talk to Stevo and see if there is perhaps a connection between Cindy's disappearance and Douglas's fateful death.  Milverstead arranges to have Cindy sent overseas with his next shipment, and brags to Ice how pleased he is things are going so smoothly, as he HATES chaos.
+John Keem meets up Stevo, who tells him Cindy left with a strange guy from the club, so they go to investigate that night.  Milverstead is there along with his gang, so John Keem stirs things up a bit by starting a fight to get Milverstead's attention when he sees a friend of Cindy named Kristy (Karman Kruschke) being harassed by a couple young punks.  Puzzled that Ice has never heard of this new heavy hitter, he sets about to find out who exactly John Keem is.
+Kristy runs a dance studio, so John Keem decides to pay her a visit the next day and question her about Cindy.  Cindy, unfortunately, became a "tragic dancer's story", where she was talented, but got lazy and started simply dancing at the clubs trying to land a rich guy, leading Stevo on the whole time that he had an actual chance with her.  They go to lunch, where they are interrupted by Stevo (whom Kristy calls "Cherub") who tells John Keem to check out an address given to him by the Captain.  John races off to follow the tip, leaving Stevo to awkwardly hit on Kristy just one day after his girlfriend goes missing.
+John finds the address, but when he gets closer to the house to investigate, he sees a bomb planted just inside the window by Milverstead's henchman Simmons (Pat Patterson) and runs away just as it explodes.  Simmons and his accomplices try to corner John, and they then engage in a wild gun battle where two of the gang are killed and Simmons wings John Keem in the shoulder.  At this moment, Kristy arrives out of nowhere in an old Volkswagen Beetle and just drives through the middle of the battle, allowing Simmons to escape.  Kristy jumps out of her car and gets in a shouting match with John, who calms her down and blows up her car so it can't be traced.  They drive off together to continue the hunt.
+Back on Milverstead's boat, he is relaxing with a drink Ice just made when Simmons arrives.  He quizzes Simmons about whether or not John Kim was dead, and makes him feel guilty about botching the operation so badly.  Simmons sputters out some nonsense about knowing that he shot John Keem, but refuses to answer whether or not he terminated the target.  Disgusted, Milverstead tells Simmons the dead men's blood scream for his, so he has Ice strangle Simmons with his own tie and toss him overboard.
+Kristy attends to John Keem's wounds back at her place, when she starts to get emotional.  Unmoved, John Keem listens and then they promptly sleep together with no apparent pre-text other than they were both there.  Stevo is frantically trying to reach John Keem, so he calls Kronious to let him know that Richard, the guy Cindy went home with, works for Milverstead.  He then goes off to complete his route for Hot Flash Pizza.  However, Captain Kronious calls Milverstead with this information, and not John Keem.  Milverstead gets off the phone and asks Ice, who has been bouncing a pencil while awaiting his next order, if he'd like a little "exercise".  Ice throws down the pencil and goes off to find and kill Stevo.
+After their sexual encounter, John Keem goes off to finish the investigation while Kristy goes to collect her 8 year old daughter she left at the club with the reception several hours earlier.  John Keem learns that Stevo has been killed, and makes the connection that Milverstead is involved.  He takes the fight to Milverstead by impersonating a homeless man and banging on the door to Milverstead Shipping in downtown Portland to alert the night watchman.  They let him in, and he promptly kills or maims the entire security team and finds evidence to finish Milverstead once and for all.
+Milverstead is waiting for him at the club, and offers a bonus to any of his henchman who kills John Keem.  Kristy leaves her daughter at home alone again to try and lure Milverstead out into the open by dancing up a storm at the dance club.  Milverstead knows she is working with John Kim, but decides to kidnap her and send her overseas anyway to punish her for working with him.  Unfortunatetly, John Keem dispatches his henchman with a single punch and quickly follows Milverstead and Ice to the docks.  There he also finds the double-crossing Captain Kronious, and gets him to tell him where Milverstead is before he shoots and kills him.
+He then kills off the remaining henchman (besides Ice) and corners a helpless Milverstead.  Wielding a samurai sword he took off one of the henchman, he chops a sobbing Milverstead's head off and turns to face Ice.  He quickly beats (but does not kill) Ice, avenging his friend's death.  He goes back to LA with Kristy and her daughter to start a new chapter of his life.
+
+Cast
+Bolo Yeung: Ice
+Richard Norton: Milverstead
+Karman Kruschke: Kristy
+Britton K. Lee: John Kim
+Joe Ivy: Captain Kronious
+Pat Patterson: Simmons
+Rob Buckmaster: Sdtyjdtevo
+Michael Lowry: Richard
+Jim Hechim: Hanz
+
+External links
+Ironheart on IMDb 
+Ironheart at AllMovie
+
+    \end{Verbatim}
+
+    \section{Procesado de texto}\label{procesado-de-texto}
+
+Para la parte de procesador de texto se va a usar NLTK y van a seguirse
+los siguientes pasos:
+
+\begin{enumerate}
+	\item Tokenization
+	\item Homogeneization
+	\item Cleaning
+	\item Vectorization
+\end{enumerate} 
+
+Una vez terminado este proceso, se obtendrá la \textit{Bag-of-Words}
+correspondiente al \textit{corpus}, que se introducirá en modelo LDA
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{k+kn}{from} \PY{n+nn}{nltk}\PY{n+nn}{.}\PY{n+nn}{tokenize} \PY{k}{import} \PY{n}{word\PYZus{}tokenize}
+        \PY{k+kn}{from} \PY{n+nn}{nltk}\PY{n+nn}{.}\PY{n+nn}{stem} \PY{k}{import} \PY{n}{WordNetLemmatizer}
+        \PY{k+kn}{from} \PY{n+nn}{nltk}\PY{n+nn}{.}\PY{n+nn}{corpus} \PY{k}{import} \PY{n}{stopwords}
+        \PY{k+kn}{import} \PY{n+nn}{gensim}
+        
+        \PY{n}{wnl} \PY{o}{=} \PY{n}{WordNetLemmatizer}\PY{p}{(}\PY{p}{)}
+        \PY{n}{stopwords\PYZus{}en} \PY{o}{=} \PY{n}{stopwords}\PY{o}{.}\PY{n}{words}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{english}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{palabros} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{wa}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{also}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ha}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{c+c1}{\PYZsh{} Después de ver los resultados hemos añadido más palabras a las stopwords}
+        \PY{n}{stopwords\PYZus{}en}\PY{o}{.}\PY{n}{extend}\PY{p}{(}\PY{n}{palabros}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+C:\textbackslash{}Users\textbackslash{}pablo\textbackslash{}Anaconda3\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}gensim\textbackslash{}utils.py:1212: UserWarning: detected Windows; aliasing chunkize to chunkize\_serial
+  warnings.warn("detected Windows; aliasing chunkize to chunkize\_serial")
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{c+c1}{\PYZsh{} Esta función va a limpiarnos el corpus realizando la tokenización, la lemmatización y la eliminación de stopwords}
+        \PY{k}{def} \PY{n+nf}{getCorpusClean}\PY{p}{(}\PY{n}{corpus}\PY{p}{)}\PY{p}{:}
+            \PY{n}{corpus\PYZus{}clean}\PY{o}{=}\PY{p}{[}\PY{p}{]}
+            \PY{k}{for} \PY{n}{text} \PY{o+ow}{in} \PY{n}{corpus}\PY{p}{:}
+                \PY{n}{tokens} \PY{o}{=} \PY{n}{word\PYZus{}tokenize}\PY{p}{(}\PY{n}{text}\PY{p}{)}
+                \PY{n}{tokens\PYZus{}filtered} \PY{o}{=} \PY{p}{[}\PY{n}{el}\PY{o}{.}\PY{n}{lower}\PY{p}{(}\PY{p}{)} \PY{k}{for} \PY{n}{el} \PY{o+ow}{in} \PY{n}{tokens} \PY{k}{if} \PY{n}{el}\PY{o}{.}\PY{n}{isalnum}\PY{p}{(}\PY{p}{)} \PY{o+ow}{and} \PY{o+ow}{not} \PY{n}{el}\PY{o}{.}\PY{n}{isdigit}\PY{p}{(}\PY{p}{)}\PY{p}{]} \PY{c+c1}{\PYZsh{} Nos quedamos solo con palabras, quitamos numeros}
+                \PY{n}{tk\PYZus{}lemmat} \PY{o}{=} \PY{p}{[}\PY{n}{wnl}\PY{o}{.}\PY{n}{lemmatize}\PY{p}{(}\PY{n}{el}\PY{p}{)} \PY{k}{for} \PY{n}{el} \PY{o+ow}{in} \PY{n}{tokens\PYZus{}filtered}\PY{p}{]}
+                \PY{n}{tk\PYZus{}clean} \PY{o}{=} \PY{p}{[}\PY{n}{tk} \PY{k}{for} \PY{n}{tk} \PY{o+ow}{in} \PY{n}{tk\PYZus{}lemmat} \PY{k}{if} \PY{n}{tk} \PY{o+ow}{not} \PY{o+ow}{in} \PY{n}{stopwords\PYZus{}en}\PY{p}{]}
+                \PY{n}{corpus\PYZus{}clean}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{tk\PYZus{}clean}\PY{p}{)}
+            \PY{k}{return} \PY{n}{corpus\PYZus{}clean}
+        
+        \PY{n}{corpus\PYZus{}clean} \PY{o}{=} \PY{n}{getCorpusClean}\PY{p}{(}\PY{n}{corpustotal}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{c+c1}{\PYZsh{} Con esta función obtenemos la Bag\PYZhy{}of\PYZhy{}Words a partir del corpus limpio}
+        \PY{k}{def} \PY{n+nf}{getCorpusBow}\PY{p}{(}\PY{n}{corpus\PYZus{}clean}\PY{p}{,} \PY{n}{no\PYZus{}below} \PY{o}{=} \PY{l+m+mi}{5}\PY{p}{,} \PY{n}{no\PYZus{}above} \PY{o}{=} \PY{o}{.}\PY{l+m+mi}{75}\PY{p}{)}\PY{p}{:}
+            \PY{n}{D} \PY{o}{=} \PY{n}{gensim}\PY{o}{.}\PY{n}{corpora}\PY{o}{.}\PY{n}{Dictionary}\PY{p}{(}\PY{n}{corpus\PYZus{}clean}\PY{p}{)}
+            \PY{n}{D}\PY{o}{.}\PY{n}{filter\PYZus{}extremes}\PY{p}{(}\PY{n}{no\PYZus{}below}\PY{o}{=}\PY{n}{no\PYZus{}below}\PY{p}{,} \PY{n}{no\PYZus{}above}\PY{o}{=}\PY{n}{no\PYZus{}above}\PY{p}{,} \PY{n}{keep\PYZus{}n}\PY{o}{=}\PY{l+m+mi}{25000}\PY{p}{)}
+            \PY{n}{corpus\PYZus{}bow} \PY{o}{=} \PY{p}{[}\PY{n}{D}\PY{o}{.}\PY{n}{doc2bow}\PY{p}{(}\PY{n}{doc}\PY{p}{)} \PY{k}{for} \PY{n}{doc} \PY{o+ow}{in} \PY{n}{corpus\PYZus{}clean}\PY{p}{]}
+            \PY{k}{return} \PY{n}{corpus\PYZus{}bow}\PY{p}{,} \PY{n}{D}
+            
+        \PY{n}{corpus\PYZus{}bow}\PY{p}{,} \PY{n}{D} \PY{o}{=} \PY{n}{getCorpusBow}\PY{p}{(}\PY{n}{corpus\PYZus{}clean}\PY{p}{)}
+\end{Verbatim}
+
+
+    \section{Modelado de tópicos con
+LDA}\label{modelado-de-tuxf3picos-con-lda}
+
+El modelado de tópicos se realiza teniendo en cuenta los documentos de
+ambas categorías, para generar así tópicos que permitan distinguir
+documentos pertenecientes a una y a otra.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{k+kn}{import} \PY{n+nn}{pyLDAvis}\PY{n+nn}{.}\PY{n+nn}{gensim} \PY{k}{as} \PY{n+nn}{gensimvis}
+        \PY{k+kn}{import} \PY{n+nn}{pyLDAvis}
+        \PY{k+kn}{from} \PY{n+nn}{gensim}\PY{n+nn}{.}\PY{n+nn}{models}\PY{n+nn}{.}\PY{n+nn}{coherencemodel} \PY{k}{import} \PY{n}{CoherenceModel}
+        
+        \PY{c+c1}{\PYZsh{} Función que nos genera el modelo LDA a partir de la BOW y el número de tópicos}
+        \PY{k}{def} \PY{n+nf}{getLDAModel}\PY{p}{(}\PY{n}{corpus\PYZus{}bow}\PY{p}{,} \PY{n}{D}\PY{p}{,} \PY{n}{num\PYZus{}topics}\PY{p}{)}\PY{p}{:}
+            \PY{n}{ldag} \PY{o}{=} \PY{n}{gensim}\PY{o}{.}\PY{n}{models}\PY{o}{.}\PY{n}{ldamodel}\PY{o}{.}\PY{n}{LdaModel}\PY{p}{(}\PY{n}{corpus}\PY{o}{=}\PY{n}{corpus\PYZus{}bow}\PY{p}{,} \PY{n}{id2word}\PY{o}{=}\PY{n}{D}\PY{p}{,} \PY{n}{num\PYZus{}topics} \PY{o}{=} \PY{n}{num\PYZus{}topics}\PY{p}{,} \PY{n}{passes}\PY{o}{=}\PY{l+m+mi}{20}\PY{p}{)}
+            \PY{k}{return} \PY{n}{ldag}
+        
+        \PY{n}{num\PYZus{}topics} \PY{o}{=} \PY{l+m+mi}{50}
+        \PY{n}{ldag} \PY{o}{=} \PY{n}{getLDAModel}\PY{p}{(}\PY{n}{corpus\PYZus{}bow}\PY{p}{,} \PY{n}{D}\PY{p}{,} \PY{n}{num\PYZus{}topics}\PY{p}{)}
+\end{Verbatim}
+
+
+    Para la elección del número de tópicos se ha realizado un análisis del efecto que esto tiene en la coherencia de los tópicos, según lo propuesto en {[}1{]}:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{k}{def} \PY{n+nf}{compute\PYZus{}coherence\PYZus{}values}\PY{p}{(}\PY{n}{dictionary}\PY{p}{,} \PY{n}{corpus}\PY{p}{,} \PY{n}{texts}\PY{p}{,} \PY{n}{limit}\PY{p}{,} \PY{n}{start}\PY{p}{,} \PY{n}{step}\PY{p}{)}\PY{p}{:}
+            \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+        \PY{l+s+sd}{    Compute c\PYZus{}v coherence for various number of topics}
+        
+        \PY{l+s+sd}{    Parameters:}
+        \PY{l+s+sd}{    \PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+        \PY{l+s+sd}{    dictionary : Gensim dictionary}
+        \PY{l+s+sd}{    corpus : Gensim corpus}
+        \PY{l+s+sd}{    texts : List of input texts}
+        \PY{l+s+sd}{    limit : Max num of topics}
+        
+        \PY{l+s+sd}{    Returns:}
+        \PY{l+s+sd}{    \PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+        \PY{l+s+sd}{    model\PYZus{}list : List of LDA topic models}
+        \PY{l+s+sd}{    coherence\PYZus{}values : Coherence values corresponding to the LDA model with respective number of topics}
+        \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+            \PY{n}{coherence\PYZus{}values} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            \PY{n}{model\PYZus{}list} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            \PY{k}{for} \PY{n}{num\PYZus{}topics} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{start}\PY{p}{,} \PY{n}{limit}\PY{p}{,} \PY{n}{step}\PY{p}{)}\PY{p}{:}
+                \PY{n}{model}\PY{o}{=}\PY{n}{gensim}\PY{o}{.}\PY{n}{models}\PY{o}{.}\PY{n}{ldamodel}\PY{o}{.}\PY{n}{LdaModel}\PY{p}{(}\PY{n}{corpus}\PY{o}{=}\PY{n}{corpus}\PY{p}{,} \PY{n}{id2word}\PY{o}{=}\PY{n}{dictionary}\PY{p}{,} \PY{n}{num\PYZus{}topics}\PY{o}{=}\PY{n}{num\PYZus{}topics}\PY{p}{,} \PY{n}{passes}\PY{o}{=}\PY{l+m+mi}{20}\PY{p}{)}
+                \PY{n}{model\PYZus{}list}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{model}\PY{p}{)}
+                \PY{n}{coherencemodel} \PY{o}{=} \PY{n}{CoherenceModel}\PY{p}{(}\PY{n}{model}\PY{o}{=}\PY{n}{model}\PY{p}{,} \PY{n}{texts}\PY{o}{=}\PY{n}{texts}\PY{p}{,} \PY{n}{dictionary}\PY{o}{=}\PY{n}{dictionary}\PY{p}{,} \PY{n}{coherence}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{c\PYZus{}v}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                \PY{n}{coherence\PYZus{}values}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{coherencemodel}\PY{o}{.}\PY{n}{get\PYZus{}coherence}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+        
+            \PY{k}{return} \PY{n}{model\PYZus{}list}\PY{p}{,} \PY{n}{coherence\PYZus{}values}
+\end{Verbatim}
+
+
+    A continuación se va a calcular el número de tópicos óptimo en función de la coherencia. Esto puede tardar un rato.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}28}]:} \PY{c+c1}{\PYZsh{} Show graph}
+         \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+         \PY{n}{limit}\PY{o}{=}\PY{l+m+mi}{70}\PY{p}{;} \PY{n}{start}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{;} \PY{n}{step}\PY{o}{=}\PY{l+m+mi}{6}\PY{p}{;}
+         \PY{n}{model\PYZus{}list}\PY{p}{,} \PY{n}{coherence\PYZus{}values} \PY{o}{=} \PY{n}{compute\PYZus{}coherence\PYZus{}values}\PY{p}{(}\PY{n}{dictionary}\PY{o}{=}\PY{n}{D}\PY{p}{,} \PY{n}{corpus}\PY{o}{=}\PY{n}{corpus\PYZus{}bow}\PY{p}{,} \PY{n}{texts}\PY{o}{=}\PY{n}{corpus\PYZus{}clean}\PY{p}{,} \PY{n}{start}\PY{o}{=}\PY{n}{start}\PY{p}{,} \PY{n}{limit}\PY{o}{=}\PY{n}{limit}\PY{p}{,} \PY{n}{step}\PY{o}{=}\PY{n}{step}\PY{p}{)}
+         \PY{n}{x} \PY{o}{=} \PY{n+nb}{range}\PY{p}{(}\PY{n}{start}\PY{p}{,} \PY{n}{limit}\PY{p}{,} \PY{n}{step}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{coherence\PYZus{}values}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Num Topics}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Coherence score}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{coherence\PYZus{}values}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{,} \PY{n}{loc}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{best}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_19_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    A partir de la gráfica nos quedamos con el modelo que tiene el número de tópicos con el valor de coherencia más alto
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{n}{ldag}\PY{o}{=}\PY{n}{model\PYZus{}list}\PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{argmax}\PY{p}{(}\PY{n}{coherence\PYZus{}values}\PY{p}{)}\PY{p}{]}
+\end{Verbatim}
+
+
+    Para visualizar de una manera más clara los tópicos se traza el
+siguiente gráfico. En este se observa como los tópicos que sobresalen en
+la misma categoría se encuentran más próximos, y la influencia de cada
+término en los distintos tópicos (y por ende en las categorías).
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{k}{def} \PY{n+nf}{visTopics}\PY{p}{(}\PY{n}{ldag}\PY{p}{,} \PY{n}{corpus\PYZus{}bow}\PY{p}{,} \PY{n}{D}\PY{p}{)}\PY{p}{:}    
+             \PY{n}{vis\PYZus{}data} \PY{o}{=} \PY{n}{gensimvis}\PY{o}{.}\PY{n}{prepare}\PY{p}{(}\PY{n}{ldag}\PY{p}{,} \PY{n}{corpus\PYZus{}bow}\PY{p}{,} \PY{n}{D}\PY{p}{,} \PY{n}{sort\PYZus{}topics}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+             \PY{k}{return} \PY{n}{pyLDAvis}\PY{o}{.}\PY{n}{display}\PY{p}{(}\PY{n}{vis\PYZus{}data}\PY{p}{)}   
+         
+         \PY{n}{visTopics}\PY{p}{(}\PY{n}{ldag}\PY{p}{,} \PY{n}{corpus\PYZus{}bow}\PY{p}{,} \PY{n}{D}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+C:\textbackslash{}Users\textbackslash{}pablo\textbackslash{}Anaconda3\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}pyLDAvis\textbackslash{}\_prepare.py:257: FutureWarning: Sorting because non-concatenation axis is not aligned. A future version
+of pandas will change to not sort by default.
+
+To accept the future behavior, pass 'sort=True'.
+
+To retain the current behavior and silence the warning, pass sort=False
+
+  return pd.concat([default\_term\_info] + list(topic\_dfs))
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}12}]:} <IPython.core.display.HTML object>
+\end{Verbatim}
+
+\begin{center}
+	\adjustimage{max size={\linewidth}{\paperheight}}{figura.png}
+\end{center}
+{ \hspace*{\fill} \\}
+
+
+            
+    La presentación escrita de las palabras más relevantes de cada tópico se muestra a continuación:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{ldag}\PY{o}{.}\PY{n}{num\PYZus{}topics}\PY{p}{)}\PY{p}{:}
+             \PY{n}{temp} \PY{o}{=} \PY{n}{ldag}\PY{o}{.}\PY{n}{show\PYZus{}topic}\PY{p}{(}\PY{n}{i}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{)}
+             \PY{n}{terms} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{k}{for} \PY{n}{term} \PY{o+ow}{in} \PY{n}{temp}\PY{p}{:}
+                 \PY{n}{terms}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{term}\PY{p}{)}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Top 10 terms for topic \PYZsh{}}\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{: }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{, }\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{p}{[}\PY{n}{i}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{terms}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+             \PY{k}{if} \PY{n}{i}\PY{o}{==}\PY{l+m+mi}{0}\PY{p}{:}
+                 \PY{n}{terms0}\PY{o}{=}\PY{n}{terms}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Top 10 terms for topic \#1: game, character, version, capcom, playstation, player, released, tekken, new, mode
+Top 10 terms for topic \#2: kick, leg, foot, kata, front, stance, left, strike, technique, hand
+Top 10 terms for topic \#3: fighter, street, game, iv, version, character, super, capcom, arcade, player
+Top 10 terms for topic \#4: game, one, used, time, two, target, often, descent, hunting, high
+Top 10 terms for topic \#5: world, warcraft, season, global, championship, challenge, korea, ii, starcraft, final
+Top 10 terms for topic \#6: team, championship, league, duty, call, mlg, esl, tournament, esports, gaming
+Top 10 terms for topic \#7: wrestler, dog, wrestling, match, fighting, one, two, field, may, sumo
+Top 10 terms for topic \#8: team, league, season, group, final, legend, championship, tournament, world, match
+Top 10 terms for topic \#9: film, show, usa, channel, network, school, pinball, television, dan, episode
+Top 10 terms for topic \#10: art, martial, form, wushu, technique, style, master, student, taekwondo, training
+Top 10 terms for topic \#11: game, player, dota, valve, team, hero, released, map, source, global
+Top 10 terms for topic \#12: overwatch, short, blizzard, game, released, map, story, animated, squad, bad
+Top 10 terms for topic \#13: game, player, fifa, version, team, league, playstation, soccer, feature, xbox
+Top 10 terms for topic \#14: opponent, arm, technique, grappling, judo, wrestling, choke, hold, used, one
+Top 10 terms for topic \#15: sumo, judo, tournament, prefecture, technique, former, win, division, first, wrestler
+Top 10 terms for topic \#16: champion, world, list, fighter, boxing, point, ranking, judge, kespa, player
+Top 10 terms for topic \#17: esports, team, kanō, league, event, player, overwatch, would, medal, world
+Top 10 terms for topic \#18: game, super, nintendo, mario, wii, new, melee, smash, u, player
+Top 10 terms for topic \#19: karate, international, world, japan, federation, association, dan, organization, member, judo
+Top 10 terms for topic \#20: fight, kg, boxing, bout, title, championship, heavyweight, champion, decision, fighter
+Top 10 terms for topic \#21: game, player, team, character, mode, one, released, new, map, release
+Top 10 terms for topic \#22: tournament, event, game, held, championship, player, world, final, first, prize
+Top 10 terms for topic \#23: game, world, starcraft, video, player, event, league, team, championship, galaxy
+Top 10 terms for topic \#24: place, 1st, 2nd, 3rd, quake, 4th, quakecon, tied, 5th, taekwondo
+Top 10 terms for topic \#25: shooting, target, sport, rifle, division, fencing, range, arena, match, shooter
+Top 10 terms for topic \#26: nba, game, season, career, team, first, one, player, series, basketball
+Top 10 terms for topic \#27: battlefield, game, new, version, said, police, one, two, cell, would
+Top 10 terms for topic \#28: used, training, use, uke, organised, one, strike, practitioner, roll, striking
+
+    \end{Verbatim}
+
+    El siguiente paso es obtener la matriz de entrenamiento que va a
+introducirse en el clasificador. Para ello tenemos que transformar la
+matriz dispersa que obtenemos del modelo en una matriz completa.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{c+c1}{\PYZsh{} Esta función nos devuelve la matriz extendida a partir de la matriz dispersa que nos da el modelo}
+         \PY{k}{def} \PY{n+nf}{getExpandedMatrix}\PY{p}{(}\PY{n}{corpus\PYZus{}bow}\PY{p}{,} \PY{n}{ldag}\PY{p}{,} \PY{n}{num\PYZus{}topics}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{reduced\PYZus{}corpus} \PY{o}{=} \PY{p}{[}\PY{n}{el} \PY{k}{for} \PY{n}{el} \PY{o+ow}{in} \PY{n}{ldag}\PY{p}{[}\PY{n}{corpus\PYZus{}bow}\PY{p}{[}\PY{p}{:}\PY{p}{]}\PY{p}{]}\PY{p}{]}
+                 \PY{n}{X} \PY{o}{=} \PY{n}{gensim}\PY{o}{.}\PY{n}{matutils}\PY{o}{.}\PY{n}{corpus2dense}\PY{p}{(}\PY{n}{reduced\PYZus{}corpus}\PY{p}{,} \PY{n}{num\PYZus{}topics}\PY{p}{)}\PY{o}{.}\PY{n}{T}
+                 \PY{k}{return} \PY{n}{X}
+         
+         
+         \PY{n}{Xtotal} \PY{o}{=} \PY{n}{getExpandedMatrix}\PY{p}{(}\PY{n}{corpus\PYZus{}bow}\PY{p}{,} \PY{n}{ldag}\PY{p}{,} \PY{n}{ldag}\PY{o}{.}\PY{n}{num\PYZus{}topics}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} También generamos el vector de etiquetas }
+         \PY{n}{y0} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{500}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)} 
+         \PY{n}{y1} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{ones}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{500}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)} 
+         \PY{n}{Stotal} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{vstack}\PY{p}{(}\PY{p}{(}\PY{n}{y0}\PY{p}{,}\PY{n}{y1}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \section{Implementación del
+clasificador}\label{implementaciuxf3n-del-clasificador}
+
+Una vez obtenida la matriz de entrenamiento, se procede a entrenar un
+clasificador. En nuestro caso hemos utilizado uno de tipo
+\textit{SVM}con kernel \textit{rbf}.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} \PY{k+kn}{from} \PY{n+nn}{sklearn} \PY{k}{import} \PY{n}{svm}
+         \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{model\PYZus{}selection} \PY{k}{import} \PY{n}{train\PYZus{}test\PYZus{}split}
+         \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{preprocessing} \PY{k}{import} \PY{n}{scale}
+         \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{model\PYZus{}selection} \PY{k}{import} \PY{n}{cross\PYZus{}val\PYZus{}score}
+         \PY{k+kn}{import} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{model\PYZus{}selection} \PY{k}{as} \PY{n+nn}{modselect}
+         \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{metrics} \PY{k}{import} \PY{n}{mean\PYZus{}squared\PYZus{}error}\PY{p}{,} \PY{n}{accuracy\PYZus{}score}
+         
+         \PY{n}{X\PYZus{}tr}\PY{p}{,} \PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{S\PYZus{}tr}\PY{p}{,} \PY{n}{S\PYZus{}test} \PY{o}{=} \PY{n}{modselect}\PY{o}{.}\PY{n}{train\PYZus{}test\PYZus{}split}\PY{p}{(}\PY{n}{Xtotal}\PY{p}{,} \PY{n}{Stotal}\PY{p}{,} \PY{n}{test\PYZus{}size}\PY{o}{=}\PY{l+m+mf}{0.20}\PY{p}{,} \PY{n}{random\PYZus{}state}\PY{o}{=}\PY{l+m+mi}{42}\PY{p}{)}
+\end{Verbatim}
+
+
+    Preparamos los parámetros para la validación cruzada
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} \PY{n}{svcparams} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{C}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{p}{[}\PY{l+m+mi}{100}\PY{p}{,} \PY{l+m+mi}{200}\PY{p}{,} \PY{l+m+mi}{350}\PY{p}{,} \PY{l+m+mi}{500}\PY{p}{,} \PY{l+m+mi}{1000}\PY{p}{,} \PY{l+m+mi}{1200}\PY{p}{,} \PY{l+m+mi}{1500} \PY{p}{]}\PY{p}{,}
+              \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gamma}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{p}{[}\PY{l+m+mf}{0.3}\PY{p}{,} \PY{l+m+mf}{0.5}\PY{p}{,} \PY{l+m+mf}{0.7}\PY{p}{,} \PY{l+m+mf}{0.9}\PY{p}{,} \PY{l+m+mf}{1.1}\PY{p}{]}\PY{p}{\PYZcb{}}
+         
+         \PY{n}{clf} \PY{o}{=} \PY{n}{svm}\PY{o}{.}\PY{n}{SVC}\PY{p}{(}\PY{n}{kernel} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rbf}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{svcGrid} \PY{o}{=} \PY{n}{modselect}\PY{o}{.}\PY{n}{GridSearchCV}\PY{p}{(}\PY{n}{clf}\PY{p}{,} \PY{n}{svcparams}\PY{p}{,} \PY{n}{cv}\PY{o}{=}\PY{l+m+mi}{20}\PY{p}{,} \PY{n}{verbose}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{scoring}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{accuracy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{n\PYZus{}jobs}\PY{o}{=}\PY{o}{\PYZhy{}}\PY{l+m+mi}{2}\PY{p}{)}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{Xtotal}\PY{p}{,}\PY{n}{np}\PY{o}{.}\PY{n}{ravel}\PY{p}{(}\PY{n}{Stotal}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Fitting 20 folds for each of 35 candidates, totalling 700 fits
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+[Parallel(n\_jobs=-2)]: Using backend LokyBackend with 7 concurrent workers.
+[Parallel(n\_jobs=-2)]: Done  36 tasks      | elapsed:    3.5s
+[Parallel(n\_jobs=-2)]: Done 560 tasks      | elapsed:    7.9s
+[Parallel(n\_jobs=-2)]: Done 700 out of 700 | elapsed:    9.1s finished
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}17}]:} \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{best accuracy score}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{svcGrid}\PY{o}{.}\PY{n}{best\PYZus{}score\PYZus{}}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{best\PYZus{}params}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{svcGrid}\PY{o}{.}\PY{n}{best\PYZus{}params\PYZus{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+best accuracy score 0.952
+best\_params \{'C': 1500, 'gamma': 0.5\}
+
+    \end{Verbatim}
+
+    Elegimos la combinación de parámetros que nos de mejor resultado
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}18}]:} \PY{n}{clf} \PY{o}{=} \PY{n}{svcGrid}\PY{o}{.}\PY{n}{best\PYZus{}estimator\PYZus{}}
+         \PY{n}{clf}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{X\PYZus{}tr}\PY{p}{,}\PY{n}{np}\PY{o}{.}\PY{n}{ravel}\PY{p}{(}\PY{n}{S\PYZus{}tr}\PY{p}{)}\PY{p}{)}
+         
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Accuracy: }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{accuracy\PYZus{}score}\PY{p}{(}\PY{n}{S\PYZus{}test}\PY{p}{,} \PY{n}{clf}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Accuracy:  0.93
+
+    \end{Verbatim}
+
+    Una vez hecho el clasificador, obtenemos un conjunto de test de 200
+artículos por categoría
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}19}]:} \PY{c+c1}{\PYZsh{} Obtenemos los índices de las páginas de test}
+         
+         \PY{n}{indices0\PYZus{}test} \PY{o}{=} \PY{n}{indices0}\PY{p}{[}\PY{l+m+mi}{500}\PY{p}{:}\PY{l+m+mi}{700}\PY{p}{]} 
+         \PY{n}{indices1\PYZus{}test} \PY{o}{=} \PY{n}{indices1}\PY{p}{[}\PY{l+m+mi}{500}\PY{p}{:}\PY{l+m+mi}{700}\PY{p}{]}
+         
+         \PY{c+c1}{\PYZsh{} Sacamos el texto de las listas de páginas}
+         \PY{n}{corpus0} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{n}{corpus1} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         
+         \PY{c+c1}{\PYZsh{} Corpus 0 test}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Corpus 0}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{k}{for} \PY{n}{n}\PY{p}{,}\PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{indices0\PYZus{}test}\PY{p}{)}\PY{p}{:}
+             \PY{k}{if} \PY{o+ow}{not} \PY{n}{n}\PY{o}{\PYZpc{}}\PY{k}{100}:
+                 \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}r}\PY{l+s+s1}{Page}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{n}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{out of}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{indices0\PYZus{}test}\PY{p}{)}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{flush}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+             \PY{n}{corpus0}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{p0}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{text}\PY{p}{)}
+              
+         \PY{c+c1}{\PYZsh{} Corpus 1 test  }
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Corpus 1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{k}{for} \PY{n}{n}\PY{p}{,}\PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{indices1\PYZus{}test}\PY{p}{)}\PY{p}{:}
+             \PY{k}{if} \PY{o+ow}{not} \PY{n}{n}\PY{o}{\PYZpc{}}\PY{k}{100}:
+                 \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}r}\PY{l+s+s1}{Page}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{n}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{out of}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{indices1\PYZus{}test}\PY{p}{)}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{flush}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+             \PY{n}{corpus1}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{p1}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{text}\PY{p}{)}
+         
+         \PY{n}{corpusTest}\PY{o}{=}\PY{n}{copy}\PY{o}{.}\PY{n}{deepcopy}\PY{p}{(}\PY{n}{corpus0}\PY{p}{)}
+         \PY{n}{corpusTest}\PY{o}{.}\PY{n}{extend}\PY{p}{(}\PY{n}{corpus1}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Corpus 0
+Page 100 out of 200
+Corpus 1
+Page 100 out of 200
+    \end{Verbatim}
+
+    Una vez obtenido el corpus de test, lo limpiamos y obtenemos la
+\textit{BOW} utilizando el diccionario que hemos obtenido en el conjunto
+de entrenamiento. Por último, obtenemos la matriz de test con el modelo
+de LDA entrenado antes
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}20}]:} \PY{n}{corpus\PYZus{}test\PYZus{}clean} \PY{o}{=} \PY{n}{getCorpusClean}\PY{p}{(}\PY{n}{corpusTest}\PY{p}{)}
+         \PY{n}{corpus\PYZus{}test\PYZus{}bow} \PY{o}{=} \PY{p}{[}\PY{n}{D}\PY{o}{.}\PY{n}{doc2bow}\PY{p}{(}\PY{n}{doc}\PY{p}{)} \PY{k}{for} \PY{n}{doc} \PY{o+ow}{in} \PY{n}{corpus\PYZus{}test\PYZus{}clean}\PY{p}{]}
+         
+         \PY{c+c1}{\PYZsh{} Una vez obtenido el BOW, sacamos la matriz extendida de igual forma que antes}
+         \PY{n}{Xtest} \PY{o}{=} \PY{n}{getExpandedMatrix}\PY{p}{(}\PY{n}{corpus\PYZus{}test\PYZus{}bow}\PY{p}{,} \PY{n}{ldag}\PY{p}{,} \PY{n}{ldag}\PY{o}{.}\PY{n}{num\PYZus{}topics}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} También generamos el vector de etiquetas para comprobar la precisión}
+         \PY{n}{y0} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{indices0\PYZus{}test}\PY{p}{)}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+         \PY{n}{y1} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{ones}\PY{p}{(}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{indices1\PYZus{}test}\PY{p}{)}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+         \PY{n}{Stest} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{vstack}\PY{p}{(}\PY{p}{(}\PY{n}{y0}\PY{p}{,}\PY{n}{y1}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    Para terminar probamos el clasificador con los datos de test
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}21}]:} \PY{n}{clf}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{Xtotal}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{ravel}\PY{p}{(}\PY{n}{Stotal}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Accuracy: }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{accuracy\PYZus{}score}\PY{p}{(}\PY{n}{Stest}\PY{p}{,} \PY{n}{clf}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{Xtest}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Accuracy:  0.9325
+
+    \end{Verbatim}
+
+    \section{Expansión}\label{expansiuxf3n}
+
+En nuestro caso hemos elegido como ampliación del proyecto utilizar
+diversos métodos de visualización de los tópicos (adaptando código de
+{[}2{]}), diferentes a los vistos en clase. Hemos elegido utilizar
+\textit{WordCloud}, el algoritmo \textit{PCA} y una visualización con
+grafos que nos permite esbozar las dos categorías utilizadas.
+
+    En primer lugar utilizamos \textit{WordCloud} para visualizar las
+palabras más importantes de alguno de los tópicos (el primero en este
+caso).
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}22}]:} \PY{k+kn}{from} \PY{n+nn}{os} \PY{k}{import} \PY{n}{path}
+         \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+         \PY{k+kn}{from} \PY{n+nn}{wordcloud} \PY{k}{import} \PY{n}{WordCloud}
+         
+         \PY{k}{def} \PY{n+nf}{terms\PYZus{}to\PYZus{}wordcounts}\PY{p}{(}\PY{n}{terms}\PY{p}{,} \PY{n}{multiplier}\PY{o}{=}\PY{l+m+mi}{1000}\PY{p}{)}\PY{p}{:}
+             \PY{k}{return}  \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ }\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ }\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{n+nb}{int}\PY{p}{(}\PY{n}{multiplier}\PY{o}{*}\PY{n}{i}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)} \PY{o}{*} \PY{p}{[}\PY{n}{i}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{]}\PY{p}{)} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{terms}\PY{p}{]}\PY{p}{)}
+         
+         \PY{n}{wordcloud} \PY{o}{=} \PY{n}{WordCloud}\PY{p}{(}\PY{n}{collocations}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{background\PYZus{}color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{seashell}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{generate}\PY{p}{(}\PY{n}{terms\PYZus{}to\PYZus{}wordcounts}\PY{p}{(}\PY{n}{terms0}\PY{p}{)}\PY{p}{)}
+         
+         \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{wordcloud}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{WordCloud of first topic}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{axis}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{off}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{savefig}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{terms1}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{}plt.close()}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_43_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    A continuación, en lugar de utilizar LDA utilizaremos PCA como método
+para reducción de dimensiones. La principal diferencia es que PCA es no
+supervisado, ignorando la clasificación (class labels):
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}23}]:} \PY{c+c1}{\PYZsh{}\PYZsh{} topic\PYZhy{}words vectors: topics vs. words}
+         \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{feature\PYZus{}extraction} \PY{k}{import} \PY{n}{DictVectorizer}
+         
+         \PY{k}{def} \PY{n+nf}{topics\PYZus{}to\PYZus{}vectorspace}\PY{p}{(}\PY{n}{n\PYZus{}topics}\PY{p}{,} \PY{n}{n\PYZus{}words}\PY{o}{=}\PY{l+m+mi}{100}\PY{p}{)}\PY{p}{:}
+             \PY{n}{rows} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n\PYZus{}topics}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{temp} \PY{o}{=} \PY{n}{ldag}\PY{o}{.}\PY{n}{show\PYZus{}topic}\PY{p}{(}\PY{n}{i}\PY{p}{,} \PY{n}{n\PYZus{}words}\PY{p}{)}
+                 \PY{n}{row} \PY{o}{=} \PY{n+nb}{dict}\PY{p}{(}\PY{p}{(}\PY{p}{(}\PY{n}{i}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}\PY{n}{i}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{temp}\PY{p}{)}\PY{p}{)}
+                 \PY{n}{rows}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{row}\PY{p}{)}
+         
+             \PY{k}{return} \PY{n}{rows}    
+         
+         \PY{n}{vec} \PY{o}{=} \PY{n}{DictVectorizer}\PY{p}{(}\PY{p}{)}
+         
+         \PY{n}{X} \PY{o}{=} \PY{n}{vec}\PY{o}{.}\PY{n}{fit\PYZus{}transform}\PY{p}{(}\PY{n}{topics\PYZus{}to\PYZus{}vectorspace}\PY{p}{(}\PY{n}{ldag}\PY{o}{.}\PY{n}{num\PYZus{}topics}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    Utilizando la herramienta de sklearn para implementar PCA y mostrar el
+resultado en dos dimensiones obtenemos una representación similar de los
+tópicos que la que obtuvimos anteriormente con LDA. También podemos
+mostrar una representación de las palabras:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}24}]:} \PY{c+c1}{\PYZsh{}\PYZsh{} PCA}
+         \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{decomposition} \PY{k}{import} \PY{n}{PCA}
+         
+         \PY{n}{pca} \PY{o}{=} \PY{n}{PCA}\PY{p}{(}\PY{n}{n\PYZus{}components}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}
+         
+         \PY{n}{X\PYZus{}pca} \PY{o}{=} \PY{n}{pca}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{X}\PY{o}{.}\PY{n}{toarray}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{o}{.}\PY{n}{transform}\PY{p}{(}\PY{n}{X}\PY{o}{.}\PY{n}{toarray}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         
+         \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{p}{)}
+         \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{X\PYZus{}pca}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{:}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{X\PYZus{}pca}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{X\PYZus{}pca}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{o}{.}\PY{l+m+mi}{5}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{text}\PY{p}{(}\PY{n}{X\PYZus{}pca}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{X\PYZus{}pca}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{s}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}    
+         
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PCA Topics}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{savefig}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{pca\PYZus{}topic}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         
+         \PY{n}{X\PYZus{}pca} \PY{o}{=} \PY{n}{pca}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{X}\PY{o}{.}\PY{n}{T}\PY{o}{.}\PY{n}{toarray}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{o}{.}\PY{n}{transform}\PY{p}{(}\PY{n}{X}\PY{o}{.}\PY{n}{T}\PY{o}{.}\PY{n}{toarray}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         
+         \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{p}{)}
+         \PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{n} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{vec}\PY{o}{.}\PY{n}{get\PYZus{}feature\PYZus{}names}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{X\PYZus{}pca}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{X\PYZus{}pca}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{o}{.}\PY{l+m+mi}{5}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{text}\PY{p}{(}\PY{n}{X\PYZus{}pca}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{X\PYZus{}pca}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{s}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{n}\PY{p}{,} \PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{8}\PY{p}{)}
+         
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PCA Words}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{savefig}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{pca\PYZus{}words}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{}plt.close()}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_47_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_47_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Por último, podemos ver un grafo a partir de la reducción dimensional
+con PCA, mostrando conexiones entre los tópicos más relacionados (que
+vendrían a mostrar un esbozo de las categorías). Vemos que además
+obtenemos un esquema que se corresponde bastante con el mostrado con la
+herramienta de pyLDAvis:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}25}]:} \PY{c+c1}{\PYZsh{}\PYZsh{} network}
+         \PY{k+kn}{import} \PY{n+nn}{networkx} \PY{k}{as} \PY{n+nn}{nx}
+         
+         \PY{k+kn}{from} \PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{spatial}\PY{n+nn}{.}\PY{n+nn}{distance} \PY{k}{import} \PY{n}{pdist}\PY{p}{,} \PY{n}{squareform}
+         \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{pipeline} \PY{k}{import} \PY{n}{make\PYZus{}pipeline}
+         \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{preprocessing} \PY{k}{import} \PY{n}{Normalizer}
+         
+         \PY{n}{pca\PYZus{}norm} \PY{o}{=} \PY{n}{make\PYZus{}pipeline}\PY{p}{(}\PY{n}{PCA}\PY{p}{(}\PY{n}{n\PYZus{}components}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{,} \PY{n}{Normalizer}\PY{p}{(}\PY{n}{copy}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}\PY{p}{)}
+         
+         \PY{n}{X\PYZus{}pca\PYZus{}norm} \PY{o}{=} \PY{n}{pca\PYZus{}norm}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{X}\PY{o}{.}\PY{n}{toarray}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{o}{.}\PY{n}{transform}\PY{p}{(}\PY{n}{X}\PY{o}{.}\PY{n}{toarray}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         
+         \PY{n}{cor} \PY{o}{=} \PY{n}{squareform}\PY{p}{(}\PY{n}{pdist}\PY{p}{(}\PY{n}{X\PYZus{}pca\PYZus{}norm}\PY{p}{,} \PY{n}{metric}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{euclidean}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{)}
+         
+         \PY{n}{G} \PY{o}{=} \PY{n}{nx}\PY{o}{.}\PY{n}{Graph}\PY{p}{(}\PY{p}{)}
+         
+         \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{cor}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{:}
+             \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{cor}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{:}
+                 \PY{k}{if} \PY{n}{i} \PY{o}{==} \PY{n}{j}\PY{p}{:}
+                     \PY{n}{G}\PY{o}{.}\PY{n}{add\PYZus{}edge}\PY{p}{(}\PY{n}{i}\PY{p}{,} \PY{n}{j}\PY{p}{,} \PY{n}{weight}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+                 \PY{k}{else}\PY{p}{:}
+                     \PY{n}{G}\PY{o}{.}\PY{n}{add\PYZus{}edge}\PY{p}{(}\PY{n}{i}\PY{p}{,} \PY{n}{j}\PY{p}{,} \PY{n}{weight}\PY{o}{=}\PY{l+m+mf}{1.0}\PY{o}{/}\PY{n}{cor}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{n}{j}\PY{p}{]}\PY{p}{)}
+         
+         \PY{n}{edges} \PY{o}{=} \PY{p}{[}\PY{p}{(}\PY{n}{i}\PY{p}{,} \PY{n}{j}\PY{p}{)} \PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{j}\PY{p}{,} \PY{n}{w} \PY{o+ow}{in} \PY{n}{G}\PY{o}{.}\PY{n}{edges}\PY{p}{(}\PY{n}{data}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)} \PY{k}{if} \PY{n}{w}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{weight}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{\PYZgt{}} \PY{l+m+mf}{1.5}\PY{p}{]}
+         \PY{n}{edge\PYZus{}weight}\PY{o}{=}\PY{n+nb}{dict}\PY{p}{(}\PY{p}{[}\PY{p}{(}\PY{p}{(}\PY{n}{u}\PY{p}{,}\PY{n}{v}\PY{p}{,}\PY{p}{)}\PY{p}{,}\PY{n+nb}{int}\PY{p}{(}\PY{n}{d}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{weight}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{)} \PY{k}{for} \PY{n}{u}\PY{p}{,}\PY{n}{v}\PY{p}{,}\PY{n}{d} \PY{o+ow}{in} \PY{n}{G}\PY{o}{.}\PY{n}{edges}\PY{p}{(}\PY{n}{data}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{}pos = nx.graphviz\PYZus{}layout(G, prog=\PYZdq{}twopi\PYZdq{}) \PYZsh{} twopi, neato, circo}
+         \PY{n}{pos} \PY{o}{=} \PY{n}{nx}\PY{o}{.}\PY{n}{spring\PYZus{}layout}\PY{p}{(}\PY{n}{G}\PY{p}{)}
+         
+         \PY{n}{nx}\PY{o}{.}\PY{n}{draw\PYZus{}networkx\PYZus{}nodes}\PY{p}{(}\PY{n}{G}\PY{p}{,} \PY{n}{pos}\PY{p}{,} \PY{n}{node\PYZus{}size}\PY{o}{=}\PY{l+m+mi}{500}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{o}{.}\PY{l+m+mi}{5}\PY{p}{)}
+         \PY{n}{nx}\PY{o}{.}\PY{n}{draw\PYZus{}networkx\PYZus{}edges}\PY{p}{(}\PY{n}{G}\PY{p}{,} \PY{n}{pos}\PY{p}{,} \PY{n}{edgelist}\PY{o}{=}\PY{n}{edges}\PY{p}{,} \PY{n}{width}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{}nx.draw\PYZus{}networkx\PYZus{}edge\PYZus{}labels(G, pos ,edge\PYZus{}labels=edge\PYZus{}weight)}
+         \PY{n}{labels} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+         \PY{k}{for} \PY{n}{index} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{ldag}\PY{o}{.}\PY{n}{num\PYZus{}topics}\PY{p}{)}\PY{p}{:}
+             \PY{n}{labels}\PY{p}{[}\PY{n}{index}\PY{p}{]}\PY{o}{=}\PY{n}{index}\PY{o}{+}\PY{l+m+mi}{1}
+         \PY{n}{nx}\PY{o}{.}\PY{n}{draw\PYZus{}networkx\PYZus{}labels}\PY{p}{(}\PY{n}{G}\PY{p}{,} \PY{n}{pos}\PY{p}{,} \PY{n}{labels}\PY{o}{=}\PY{n}{labels}\PY{p}{,}\PY{n}{font\PYZus{}size}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{,} \PY{n}{font\PYZus{}family}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sans\PYZhy{}serif}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{savefig}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{network}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{}plt.close()}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_49_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \section{Referencias}\label{referencias}
+
+{[}1{]} https://datascienceplus.com/evaluation-of-topic-modeling-topic-coherence/ \\
+
+\noindent {[}2{]} https://gist.github.com/tokestermw/3588e6fbbb2f03f89798
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
